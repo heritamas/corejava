@@ -48,7 +48,7 @@ class Driver {
     }
 
     Stream<String> pipe2(Collection<Function<String, String>> actions) throws IOException {
-        Function<String, String> groupFunction = actions.stream().reduce(x -> x, (f1,f2) -> f2.compose(f1));
+        Function<String, String> groupFunction = actions.stream().reduce(Function.identity(), Function::andThen);
         return Files.lines(path).map(groupFunction);
     }
 }
