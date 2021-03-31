@@ -16,11 +16,15 @@ public class ServiceLoaderTest
 
    public static void main(String[] args) throws UnsupportedEncodingException
    {
-      Cipher cipher = getCipher(1);
+      Cipher cipher = getCipher(5);
       var message = "Meet me at the toga party.";
-      byte[] bytes = cipher.encrypt(message.getBytes(), new byte[] { 3 });
+      byte[] key = new byte[] { 3 };
+      byte[] bytes = cipher.encrypt(message.getBytes(), key);
       var encrypted = new String(bytes, StandardCharsets.UTF_8);
       System.out.println(encrypted);
+      var dbytes = cipher.decrypt(bytes, key);
+      var decrypted = new String(dbytes, StandardCharsets.UTF_8);
+       System.out.println(decrypted);
    }
 
    public static Cipher getCipher(int minStrength)

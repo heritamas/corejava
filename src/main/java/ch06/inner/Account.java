@@ -10,10 +10,28 @@ public class Account {
 
     class InternalAudit implements AccountChecker {
 
+        @Override
+        public boolean isEligible() {
+            return false;
+        }
+
+        @Override
+        public boolean isBalanceEnough(Integer amount) {
+            return false;
+        }
     }
 
     class ExternalAudit implements AccountChecker {
 
+        @Override
+        public boolean isEligible() {
+            return false;
+        }
+
+        @Override
+        public boolean isBalanceEnough(Integer amount) {
+            return false;
+        }
     }
 
     private Integer balance;
