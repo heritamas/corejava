@@ -12,12 +12,12 @@ public class Account {
 
         @Override
         public boolean isEligible() {
-            return false;
+            return true;
         }
 
         @Override
         public boolean isBalanceEnough(Integer amount) {
-            return false;
+            return (balance - amount > 0);
         }
     }
 
@@ -25,12 +25,12 @@ public class Account {
 
         @Override
         public boolean isEligible() {
-            return false;
+            return (accountNo % 3 == 0);
         }
 
         @Override
         public boolean isBalanceEnough(Integer amount) {
-            return false;
+            return (balance - amount > 0);
         }
     }
 

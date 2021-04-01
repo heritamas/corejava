@@ -16,7 +16,7 @@ public class ServiceLoaderTest
 
    public static void main(String[] args) throws UnsupportedEncodingException
    {
-      Cipher cipher = getCipher(5);
+      Cipher cipher = getCipher(80);
       var message = "Meet me at the toga party.";
       byte[] key = new byte[] { 3 };
       byte[] bytes = cipher.encrypt(message.getBytes(), key);
