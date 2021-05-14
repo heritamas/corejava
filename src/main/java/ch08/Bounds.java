@@ -3,7 +3,6 @@ package ch08;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 class SmallNumber {
@@ -28,8 +27,8 @@ class SmallNumber {
 
 public class Bounds {
 
-    public static <T> List<T> convertAndFilterToList(List<T> ls) {
-        return ls.stream().filter(t -> t.isSmall()).collect(Collectors.toList());
+    public static <T extends SmallNumber> List<T> convertAndFilterToList(List<T> ls) {
+        return ls.stream().filter(SmallNumber::isSmall).collect(Collectors.toList());
     }
 
 

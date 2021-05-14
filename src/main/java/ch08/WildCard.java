@@ -13,6 +13,8 @@ class Ancestor {
     public String doSomething() {
         return String.format("Something is done with a %s", entity);
     }
+    
+    
 }
 
 class Derived extends Ancestor {
@@ -33,13 +35,14 @@ class Derived extends Ancestor {
 
 public class WildCard {
 
-    public static void executeAncestors(List<Ancestor> lst) {
+    public static void executeAncestors(List<? extends Ancestor> lst) {
         lst.stream().map(Ancestor::doSomething).forEach(System.out::println);
     }
 
     public static void main(String[] args) {
         List<Derived> derivedList = new ArrayList<>();
         derivedList.add(new Derived("teddy bear", "cruel"));
+        List<? extends Ancestor> variable = derivedList;
 
         executeAncestors(derivedList);
     }

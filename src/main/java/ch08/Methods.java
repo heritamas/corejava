@@ -7,25 +7,31 @@ import java.util.stream.Collectors;
 
 public class Methods {
 
-    public static void printArray(String[] arr) {
-        for (String s: arr) {
-            System.out.println(s);
-        }
-    }
-
-    public static void printArray(Long[] arr) {
-        for (Long l: arr) {
-            System.out.println(l);
-        }
-    }
-
-    public static void printArray(Character[] arr) {
-        for (Character c: arr) {
+//    public static void printArray(String[] arr) {
+//        for (String s: arr) {
+//            System.out.println(s);
+//        }
+//    }
+//
+//    public static void printArray(Long[] arr) {
+//        for (Long l: arr) {
+//            System.out.println(l);
+//        }
+//    }
+//
+//    public static void printArray(Character[] arr) {
+//        for (Character c: arr) {
+//            System.out.println(c);
+//        }
+//    }
+    
+    public static <T> void printArray(T[] arr) {
+        for (T c: arr) {
             System.out.println(c);
         }
     }
 
-    public static List<Integer> convertAndMapToList(Integer[] arr, Function<Integer, Integer> mapping) {
+    public static <S,T> List<T> convertAndMapToList(S[] arr, Function<S, T> mapping) {
         return Arrays.stream(arr).map(mapping).collect(Collectors.toList());
     }
 
@@ -36,6 +42,6 @@ public class Methods {
         printArray(new Character[]{'c', 'd', 'e', '☺'});
 
         Integer[] arr = new Integer[]{1,2,3,4,5};
-        System.out.println(convertAndMapToList(arr, i -> i*2));
+        System.out.println(convertAndMapToList(arr, i -> i.toString() + "paros"));
     }
 }

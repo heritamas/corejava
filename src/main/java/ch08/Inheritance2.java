@@ -8,7 +8,7 @@ class Super2 <T> {
 class Sub2< A , B extends A > extends Super2 <A> {
     // why?
     @Override
-    public void set( B arg) {  }
+    public void set( A arg) {  }
 
     @Override
     public B get() {  return null; }

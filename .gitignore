@@ -1,3 +1,6 @@
+.idea/
+corejava.iml
+target/
 # Compiled class file
 *.class
 

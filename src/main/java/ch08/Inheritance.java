@@ -29,14 +29,14 @@ class Sub extends Super<Number> {
 
     // why?
     @Override
-    public void setT(Long number) {
+    public void setT(Number number) {
         super.setT(number);
     }
 
-    // why?
-    public void setT(Object number) {
-        super.setT((Number)number);
-    }
+//    // why?
+//    public void setT(Object number) {
+//        setT((Number)number);
+//    }
 
 }
 
