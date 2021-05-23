@@ -19,11 +19,9 @@ class Draw {
             throw new IllegalArgumentException("C'mon!");
         }
 
-        List<Integer> all = new ArrayList<>(upTo200.subList(0, outOf));
-        Collections.shuffle(all);
-        List<Integer> result = new ArrayList<>(all.subList(0, num));
-        Collections.sort(result);
-        return result;
+        //TODO
+
+        return Collections.emptyList();
     }
 }
 

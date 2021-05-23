@@ -71,13 +71,10 @@ class LeapDayWithoutIf implements LeapDay {
         }
     }
 
-    private Rule rule400 = Rule.of((Integer i) -> i % 400 == 0, ConstRule.of(true), ConstRule.of(false));
-    private Rule rule100 = Rule.of((Integer i) -> i % 100 == 0, rule400, ConstRule.of(true));
-    private Rule rule4 = Rule.of((Integer i) -> i % 4 == 0, rule100, ConstRule.of(false));
-
     @Override
     public boolean hasLeapDay(int year) {
-        return rule4.evaluate(year);
+        // TODO
+        return true;
     }
 }
 

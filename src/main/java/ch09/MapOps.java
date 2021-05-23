@@ -38,18 +38,7 @@ public class MapOps {
         String currentRole = "UNKNOWN";
         String currentText = "";
         for (String text : tr.getContent()) {
-            Matcher m = role.matcher(text);
-            if (m.matches()) {
-                // save accumulated text
-                acts.putIfAbsent(currentRole, new ArrayList<>());
-                acts.merge(currentRole, List.of(currentText), (lst, toAppend) -> { lst.addAll(toAppend); return lst;});
-
-                //update current variables
-                currentRole = m.group(1);
-                currentText = "";
-            } else {
-                currentText += text;
-            }
+            //TODO
         }
 
         // How many times did Hamlet tell something?
