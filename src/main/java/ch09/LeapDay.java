@@ -73,8 +73,10 @@ class LeapDayWithoutIf implements LeapDay {
 
     @Override
     public boolean hasLeapDay(int year) {
-        // TODO
-        return true;
+        Rule<Integer> rule400 = Rule.of(yr -> yr % 400 == 0, ConstRule.of(true), ConstRule.of(false));
+        Rule<Integer> rule100 = Rule.of(yr -> yr % 100 == 0, rule400, ConstRule.of(true));
+        Rule<Integer> base = Rule.of(yr -> yr % 4 == 0, rule100, ConstRule.of(false));
+        return base.evaluate(year);
     }
 }
 
@@ -83,7 +85,7 @@ class LeapDayRunner {
 
     public static void main(String[] args) {
         LeapDay ld = new LeapDayWithoutIf();
-        //LeapDay ld = new LeapDayIf();
+//        LeapDay ld = new LeapDayIf();
 
         System.out.format("%d is leap-year? %b%n", 2020, ld.hasLeapDay(2020));
         System.out.format("%d is leap-year? %b%n", 2000, ld.hasLeapDay(2000));

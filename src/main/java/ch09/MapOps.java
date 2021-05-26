@@ -38,7 +38,20 @@ public class MapOps {
         String currentRole = "UNKNOWN";
         String currentText = "";
         for (String text : tr.getContent()) {
-            //TODO
+            Matcher matcher = role.matcher(text);
+            if (matcher.matches()){
+                acts.putIfAbsent(currentRole, new ArrayList<>());
+                acts.merge(currentRole, List.of(currentText), (oldList, newElement) -> 
+                {
+                    oldList.addAll(newElement);
+                    return oldList;
+                });
+                currentRole = matcher.group(1);
+                currentText = "";
+            }
+            else {
+                currentText += text;
+            }
         }
 
         // How many times did Hamlet tell something?

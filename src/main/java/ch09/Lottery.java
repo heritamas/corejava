@@ -1,6 +1,7 @@
 package ch09;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,10 +19,13 @@ class Draw {
         if (outOf > 200) {
             throw new IllegalArgumentException("C'mon!");
         }
+        ArrayList<Integer> subList = new ArrayList<Integer>(upTo200.subList(0,outOf));
+        Collections.shuffle(subList);
 
-        //TODO
+        ArrayList<Integer> sortedList = new ArrayList<Integer>(subList.subList(0,num));
+        Collections.sort(sortedList);
+        return sortedList;
 
-        return Collections.emptyList();
     }
 }
 
