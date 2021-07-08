@@ -20,6 +20,7 @@ public class Election {
             final int stationId = i;
 
             stations[stationId] = ps;
+            
 
             // init polling stations, and voting
             new Thread(aggregation, () -> {
@@ -30,7 +31,6 @@ public class Election {
             // collecting
             new Thread(aggregation, () -> {
                 // collect votes when ready
-                ps.waitUntilReady();
                 eo.collectVotes(ps);
             }).start();
 

@@ -6,7 +6,7 @@ public class ElectionOffice {
 
     private final EnumMap<Candidate, Long> allVotes = new EnumMap<Candidate, Long>(Candidate.class);
 
-    public void collectVotes(PollingStation ps) {
+    public synchronized void collectVotes(PollingStation ps) {
         for (Candidate cd : Candidate.values()) {
             allVotes.merge(cd, ps.getVotes(cd), Long::sum);
         }

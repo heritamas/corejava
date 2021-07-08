@@ -13,7 +13,7 @@ public class PollingStation {
         maxBallots = Util.nextInt(100);
     }
 
-    public void castVotes() {
+    public synchronized void castVotes() {
         // it takes a while everyone casts his vote
         Util.sleep(Util.nextInt(1000));
 
@@ -27,15 +27,21 @@ public class PollingStation {
         Util.sleep(Util.nextInt(1000));
 
         ready = true;
+        notifyAll();
     }
 
-    public void waitUntilReady() {
+    public synchronized void waitUntilReady() {
         while (!ready) {
-            Util.sleep(100);
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public Long getVotes(Candidate c) {
+        waitUntilReady();
         return votes.getOrDefault(c, 0L);
     }
 
