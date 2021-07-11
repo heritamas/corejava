@@ -10,19 +10,20 @@ public class Election {
     private final static Logger log = Logger.getLogger(Election.class.getName());
 
     private PollingStation[] stations = new  PollingStation[NUM_POLLING_STATIONS];
+    private ThreadGroup casting = new ThreadGroup("casting");
     private ThreadGroup aggregation = new ThreadGroup("aggregation");
     private ElectionOffice eo = new ElectionOffice();
 
     private void runElection() throws InterruptedException {
         for (int i = 0; i < NUM_POLLING_STATIONS ; ++i) {
 
-            final PollingStation ps = new PollingStation();
+            final PollingStation ps = new PollingStation(i);
             final int stationId = i;
 
             stations[stationId] = ps;
 
             // init polling stations, and voting
-            new Thread(aggregation, () -> {
+            new Thread(casting, () -> {
                 // cast votes
                 ps.castVotes();
             }).start();
@@ -37,6 +38,15 @@ public class Election {
         }
 
         // wait for all threads
+        Thread[] castingThreads = new Thread[NUM_POLLING_STATIONS];
+        casting.enumerate(castingThreads);
+
+        // wait all runner to finish,
+        for (Thread t : castingThreads) {
+            if (t != null)
+                t.join();
+        }
+
         Thread[] pollingThreads = new Thread[NUM_POLLING_STATIONS];
         aggregation.enumerate(pollingThreads);
 
