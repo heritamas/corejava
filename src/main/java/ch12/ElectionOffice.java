@@ -1,10 +1,11 @@
 package ch12;
 
 import java.util.EnumMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ElectionOffice {
 
-    private final EnumMap<Candidate, Long> allVotes = new EnumMap<Candidate, Long>(Candidate.class);
+    private final ConcurrentHashMap<Candidate, Long> allVotes = new ConcurrentHashMap<>();
 
     public void collectVotes(PollingStation ps) {
         for (Candidate cd : Candidate.values()) {
