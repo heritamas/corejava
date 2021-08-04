@@ -1,4 +1,5 @@
 https://www.theguardian.com/world
 https://www.bbc.com/news/world
+http://foo.bar/world
 https://www.cbsnews.com/world/
 https://www.nbcnews.com/world

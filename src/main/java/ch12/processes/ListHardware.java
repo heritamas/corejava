@@ -8,7 +8,8 @@ public class ListHardware {
 
     public static void main(String[] args) throws IOException {
 
-        Process lister = new ProcessBuilder("lshw", "-json", "-class storage")
+        Process lister = new ProcessBuilder("lshw", "-json", "-class", "storage")
+                .redirectErrorStream(true)
                 .start();
 
         try (Scanner in = new Scanner(lister.getInputStream())) {
