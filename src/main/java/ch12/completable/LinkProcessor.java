@@ -8,9 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class LinkProcessor {
-
-    private static ExecutorService downloaders = Executors.newFixedThreadPool(10);
-
+    
     public static Optional<Document> downloadPage(String uriString) {
         Document result = null;
 

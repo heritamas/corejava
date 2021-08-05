@@ -3,27 +3,26 @@ package ch12.futures;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class TaskStarter {
 
-    static ExecutorService service = Executors.newFixedThreadPool(10);
+    static ExecutorService executor = Executors.newFixedThreadPool(20);
+    static ExecutorCompletionService<String> service = new ExecutorCompletionService<String>(executor);
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-
-        List<Future<String>> futures = new ArrayList<>();
-
+        
         for (int i = 0; i < 20; ++i) {
-            futures.add(service.submit(new RandomTask()));
+            service.submit(new RandomTask());
+        }
+        for (int i = 0; i<20; i++) {
+            System.out.println(service.take().get());
         }
 
-        for (Future<String> result : futures) {
-            System.out.println(result.get());
-        }
-
-        service.shutdown();
-        service.shutdownNow();
+        executor.shutdown();
+        executor.shutdownNow();
     }
 }
