@@ -34,11 +34,11 @@ class LeapDayWithoutIf implements LeapDay {
 
         Rule() {}
 
-        static <T> Rule<T>  of(Predicate<T> pred, Rule trueRule, Rule falseRule) {
-            return new Rule().addRule(pred, trueRule, falseRule);
+        static <T> Rule<T>  of(Predicate<T> pred, Rule<T> trueRule, Rule<T> falseRule) {
+            return new Rule<T>().addRule(pred, trueRule, falseRule);
         }
 
-        Rule<T> addRule(Predicate<T> pred, Rule trueRule, Rule falseRule) {
+        Rule<T> addRule(Predicate<T> pred, Rule<T> trueRule, Rule<T> falseRule) {
             rules.put(pred, trueRule);
             rules.put(pred.negate(), falseRule);
             return this;
@@ -57,8 +57,8 @@ class LeapDayWithoutIf implements LeapDay {
     static class ConstRule<T> extends Rule<T> {
         private final boolean result;
 
-        static Rule of(boolean arg) {
-            return new ConstRule(arg);
+        static <T> Rule<T> of(boolean arg) {
+            return new ConstRule<T>(arg);
         }
 
         ConstRule(boolean arg) {
