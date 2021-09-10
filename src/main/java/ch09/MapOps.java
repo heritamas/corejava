@@ -13,11 +13,11 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class TextReader {
+public class TextReader {
 
     private final List<String> content;
 
-    TextReader(String what) throws URISyntaxException, IOException {
+    public TextReader(String what) throws URISyntaxException, IOException {
         Path pathOfWhat = Paths.get(TextReader.class.getResource(what).toURI());
         content = Files.readAllLines(pathOfWhat);
     }
