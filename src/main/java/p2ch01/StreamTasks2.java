@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.StringJoiner;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -84,13 +83,23 @@ public class StreamTasks2 {
     }
 
     // map roles to its text
-    private static Stream<Map.Entry<String, String>> linesOfRoles(Stream<String> input) {
-        return null;
+    private static Stream<AbstractMap.SimpleEntry<String, String>> linesOfRoles(Stream<String> input) {
+        final AtomicReference<String> role = new AtomicReference<>("");
+        return input
+            .map(line -> {
+                if (line.matches("\\*.*\\*")) {
+                    role.set(line);
+                }
+                return new AbstractMap.SimpleEntry<>(role.get(), line);
+            })
+            .filter(entry -> !entry.getKey().equals(entry.getValue()));
     }
 
     // ... separated by ","
     private static String allRolesOneline(Stream<String> input) {
-        return null;
+        return input
+            .filter(line -> line.matches("\\*.*\\*"))
+            .collect(Collectors.collectingAndThen(Collectors.toSet(), Set::toString));
     }
 
     // in which lines, "something" is mentioned?
@@ -104,18 +113,43 @@ public class StreamTasks2 {
     }
 
     // script for actors
-    private static List<String> linesOfRole(Stream<String> input, String role) {
-        return null;
+    private static List linesOfRole(Stream<String> input, String role) {
+//        Map<String, String> script = linesOfRoles(input)
+//            .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue(), (word1, word2) -> word1 + "\n" + word2));
+//        return script.get(role);
+        return linesOfRoles(input)
+            .collect(Collectors.groupingBy(entry -> entry.getKey(), Collectors.mapping(entry -> entry.getValue(), Collectors.toList()))).get(role);
     }
 
     // number of lines per role
     private static Map<String, Long> noLinesOfRoles(Stream<String> input) {
-        return null;
+        return linesOfRoles(input)
+            .collect(Collectors.groupingBy(entry -> entry.getKey(), Collectors.mapping(entry -> entry.getValue(), Collectors.counting())));
     }
 
     // roles, who speak about another roles
     private static Map<String, Set<String>> rolesAboutRoles(Stream<String> input) throws URISyntaxException, IOException {
-        return null;
+        Set<String> roles = getWordStream()
+            .filter(Pattern.compile("\\p{Lu}{4,}").asMatchPredicate())
+            .map(String::toLowerCase)
+            .collect(Collectors.toSet());
+
+        Pattern splitter = Pattern.compile("\\PL+");
+        //System.out.println(roles);
+
+        return linesOfRoles(input)
+            .collect(
+                Collectors.groupingBy(
+                    Map.Entry::getKey,
+                    Collectors.mapping(
+                        Map.Entry::getValue,
+                        Collectors.flatMapping(
+                            splitter::splitAsStream,
+                            Collectors.mapping(
+                                String::toLowerCase,
+                                Collectors.filtering(
+                                    roles::contains,
+                                    Collectors.toSet()))))));
     }
 
 
@@ -129,6 +163,15 @@ public class StreamTasks2 {
 //        allMentions(getLineStream(), "thy").forEach(System.out::println);
 //        System.out.println(mentionedIn(getLineStream(), "blood"));
 //        linesOfRoles(getLineStream()).values().forEach(System.out::println);
-        System.out.println(noLinesOfRoles(getLineStream()));
+//        System.out.println(noLinesOfRoles(getLineStream()));
+//        linesOfRoles(getLineStream()).forEach(System.out::println);
+//        System.out.println(allRolesOneline(getLineStream()));
+//        System.out.println(linesOfRole(getLineStream(), "*Ghost*"));
+//        linesOfRole(getLineStream(), "*HORATIO*").forEach(System.out::println);
+//        System.out.println(noLinesOfRoles(getLineStream()));
+        System.out.println(rolesAboutRoles(getLineStream()));
+    
     }
+    
+    
 }
