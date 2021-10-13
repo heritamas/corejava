@@ -79,6 +79,10 @@ public class InputOutput {
 
     }
 
+    // can a data stream read back into  a Buffer?
+    private static void readObjectsViaBuffer() {
+    }
+
 
 
     public static void main(String[] args) throws IOException, URISyntaxException {
