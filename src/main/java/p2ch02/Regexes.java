@@ -1,6 +1,7 @@
 package p2ch02;
 
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,12 +53,18 @@ public class Regexes {
         return List.of(input.split("(?<=\\G.{4})"));
     }
 
+    // substitute ${key} values from Map in a string template
+    private static String interpolate(String template, Map<String, String> dictionary) {
+        return "";
+    }
+
     public static void main(String[] args) {
 //        System.out.println(parseDate("2021.10.22. 11:14:33"));
 //        System.out.println(parseDate("20sfg21.10.22. 11:1ff4:33"));
 //        System.out.println(parseDate("2021.6.3. 11:2:33"));
 
-        System.out.println(split4Chars("ksdfjga adfga ASDGADFb wrgesw =p;;vpew "));
+        //System.out.println(split4Chars("ksdfjga adfga ASDGADFb wrgesw =p;;vpew "));
+        System.out.println(interpolate("Foo is ${foo}, bar is ${bar}, baz is ${baz}", Map.of("foo", "fú", "bar", "bár")));
 
     }
 }
