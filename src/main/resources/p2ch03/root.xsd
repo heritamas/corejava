@@ -6,12 +6,12 @@
     <xsd:element name="root">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element ref="rt:child" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="rt:kismacska" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:element name="child">
+    <xsd:element name="kismacska">
         <xsd:complexType>
             <xsd:simpleContent>
                 <xsd:extension base="xsd:decimal">

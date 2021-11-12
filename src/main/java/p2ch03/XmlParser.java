@@ -21,10 +21,12 @@ import javax.xml.xpath.XPathNodes;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,19 +52,21 @@ public class XmlParser {
 
     static DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     static DocumentBuilderFactory validatingFactory = DocumentBuilderFactory.newInstance();
-
     static DocumentBuilder builder ;
     static DocumentBuilder validatingBuilder ;
-
     static XPathFactory xpfactory = XPathFactory.newInstance();
-
     static {
         try {
             builder = factory.newDocumentBuilder();
-
+            final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+            final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+            validatingFactory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
+            validatingFactory.setIgnoringComments(true);
+            validatingFactory.setIgnoringElementContentWhitespace(true);
+            validatingFactory.setNamespaceAware(true);
+            validatingFactory.setValidating(true);
             validatingBuilder = validatingFactory.newDocumentBuilder();
-            validatingBuilder.setErrorHandler(new LoggingErrorHandler());
-
+            validatingBuilder.setErrorHandler(new XmlParser.LoggingErrorHandler());
         } catch (ParserConfigurationException e) {
             log.log(Level.SEVERE, "error", e);
         }
@@ -87,11 +91,17 @@ public class XmlParser {
     }
 
     public static Document parseXml(DocumentBuilder builder, String fname) throws URISyntaxException, IOException, SAXException {
-        return null;
+        return builder.parse(XmlParser.class.getResourceAsStream(fname)); //BAD!!!
     }
 
     private static Map<String, String> getAttributeMap(NamedNodeMap attrs) {
-        return null;
+        if (attrs == null) return Collections.emptyMap();
+        Map<String, String> result = new HashMap<>();
+        for(int j = 0; j < attrs.getLength(); j++) {
+            Node item = attrs.item(j);
+            result.put(item.getNodeName(), item.getNodeValue());
+        }
+        return result;
     }
 
     public static String getNodeString(Node nd) {
@@ -101,7 +111,12 @@ public class XmlParser {
 
     public static List<String> listAllChildren(Document doc) {
         List<String> result = new ArrayList<>();
-
+        Element root = doc.getDocumentElement();
+        NodeList children = root.getChildNodes();
+        for(int i = 0; i < children.getLength(); i++) {
+            Node item = children.item(i);
+            result.add(getNodeString(item));
+        }
         return result;
     }
 
@@ -114,8 +129,8 @@ public class XmlParser {
 
 
     public static void main(String[] args) throws URISyntaxException, IOException, SAXException, XPathExpressionException {
-        //listAllChildren(parseXml(builder, "root.xml")).forEach(System.out::println);
+//        listAllChildren(parseXml(builder, "root.xml")).forEach(System.out::println);
         listAllChildren(parseXml(validatingBuilder, "root.xml")).forEach(System.out::println);
-        listChildrenXpath(parseXml(validatingBuilder, "root.xml")).forEach(System.out::println);
+//        listChildrenXpath(parseXml(validatingBuilder, "root.xml")).forEach(System.out::println);
     }
 }

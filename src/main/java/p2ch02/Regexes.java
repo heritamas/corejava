@@ -55,7 +55,11 @@ public class Regexes {
 
     // substitute ${key} values from Map in a string template
     private static String interpolate(String template, Map<String, String> dictionary) {
-        return "";
+        Pattern pattern = Pattern.compile("\\$\\{(\\p{L}*)\\}");
+        Matcher matcher = pattern.matcher(template);
+        return matcher.replaceAll(matchResult -> {
+            return dictionary.getOrDefault(matchResult.group(1), "");
+        });
     }
 
     public static void main(String[] args) {

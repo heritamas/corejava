@@ -3,8 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:rt="na_ugye_hogy_nem_kell_URL-nek_lennie_a_némszpésznek"
     xsi:schemaLocation="na_ugye_hogy_nem_kell_URL-nek_lennie_a_némszpésznek root.xsd">
-    <rt:child no="attr1">1</rt:child>
-    <rt:child no="attr2">2</rt:child>
-    <rt:child no="attr3">3</rt:child>
-    <rt:child>4</rt:child>
+    <rt:kismacska no="attr1">1</rt:kismacska>
+    <rt:kismacska no="attr2">2</rt:kismacska>
+    <rt:kismacska no="attr3">3</rt:kismacska>
+    <rt:kismacska>4</rt:kismacska>
+    <rt:kismacska no="attr77">77</rt:kismacska>
 </rt:root>
