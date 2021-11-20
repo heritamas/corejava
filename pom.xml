@@ -63,6 +63,10 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <compilerArgs>
+                        <arg>--add-exports</arg>
+                        <arg>java.xml.crypto/com.sun.org.apache.xml.internal.security.utils=corejava</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 

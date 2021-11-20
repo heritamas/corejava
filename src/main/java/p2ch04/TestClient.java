@@ -12,14 +12,23 @@ import java.util.Scanner;
 public class TestClient {
     public static void main(String[] args) throws IOException {
 
-        // address of 444.hu?
-        var address = null;
+        InetAddress address = InetAddress.getByName("444.hu");
         System.out.println(address);
 
-        // content of main page?
-        Socket s = null;
-        // ...
-        System.out.println(null);
+        Socket s = new Socket("444.hu", 80);
+        InputStream in = s.getInputStream();
+        Scanner scanner = new Scanner(in);
+
+        OutputStream out = s.getOutputStream();
+        PrintWriter pwr = new PrintWriter(out, true, StandardCharsets.UTF_8);
+
+        pwr.println("GET / HTTP/1.1");
+        pwr.println("Host: 444.hu");
+        pwr.println("");
+
+        while (scanner.hasNextLine()) {
+            System.out.println(scanner.nextLine());
+        }
 
         s.close();
     }
