@@ -5,4 +5,5 @@ module corejava {
         requires org.antlr.antlr4.runtime;
         requires mockito.all;
         requires org.jsoup;
+    requires java.sql;
 }
