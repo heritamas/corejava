@@ -1,23 +1,31 @@
 package p2ch05.db;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
 public class Pet {
 
-    protected LocalDate ownedSince;
-    protected String petName;
-    protected String species;
-    protected List<Food> eats;
-    protected Owner owner;
+    private Integer id;
+    private LocalDate ownedSince;
+    private String petName;
+    private String species;
+    private List<Food> eats = new ArrayList<>();
+    private Owner owner;
 
+    public Pet() {
+    }
 
     public Pet(LocalDate ownedSince, String petName, String species, Owner owner) {
         this.ownedSince = ownedSince;
         this.petName = petName;
         this.species = species;
         this.owner = owner;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public LocalDate getOwnedSince() {
@@ -67,7 +75,6 @@ public class Pet {
                 .add("petName='" + petName + "'")
                 .add("species='" + species + "'")
                 .add("eats=" + eats)
-                .add("owner=" + owner)
                 .toString();
     }
 }

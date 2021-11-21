@@ -1,19 +1,28 @@
 package p2ch05.db;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
 public class Owner {
 
-    protected String city;
-    protected String name;
-    protected String phone;
-    protected List<Pet> pets;
+    private Integer id;
+    private String city;
+    private String name;
+    private String phone;
+    private List<Pet> pets = new ArrayList<>();
+
+    public Owner() {
+    }
 
     public Owner(String city, String name, String phone) {
         this.city = city;
         this.name = name;
         this.phone = phone;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getCity() {

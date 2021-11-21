@@ -5,10 +5,18 @@ import java.util.StringJoiner;
 
 public class Food implements Serializable {
 
-    protected String foodName;
+    private Integer id;
+    private String foodName;
+
+    public Food() {
+    }
 
     public Food(String foodName) {
         this.foodName = foodName;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getFoodName() {

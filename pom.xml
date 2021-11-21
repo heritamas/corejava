@@ -58,6 +58,12 @@
             <version>42.3.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.codejargon</groupId>
+            <artifactId>fluentjdbc</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>
