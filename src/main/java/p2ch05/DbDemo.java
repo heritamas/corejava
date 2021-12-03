@@ -33,6 +33,13 @@ public class DbDemo {
         while (rs.next()) {
             System.out.printf("%s szereti a %s-t%n", rs.getString("pet"), rs.getString("food"));
         }
+        
+        Statement ownerStat = db.createStatement();
+        String ownerQuery = "select * from corejava.owners";
+        ResultSet ownerResult = ownerStat.executeQuery(ownerQuery);
+        while (ownerResult.next()) {
+            System.out.printf("Owner: %s, Phone number: %s%n", ownerResult.getString("name"), ownerResult.getString("phone"));
+        }
 
 
 

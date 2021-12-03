@@ -1,6 +1,5 @@
 package p2ch03;
 
-import com.sun.org.apache.xml.internal.security.utils.DOMNamespaceContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

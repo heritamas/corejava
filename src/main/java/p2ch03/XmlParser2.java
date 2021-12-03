@@ -1,6 +1,6 @@
 package p2ch03;
 
-import com.sun.org.apache.xml.internal.security.utils.DOMNamespaceContext;
+//import com.sun.org.apache.xml.internal.security.utils.DOMNamespaceContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -110,8 +110,8 @@ public class XmlParser2 {
   public static List<String> listChildrenXpath(Document doc) throws XPathExpressionException {
     List<String> result = new ArrayList<>();
     XPath xp = xpfactory.newXPath();
-    NamespaceContext fromDom = new DOMNamespaceContext(doc.getDocumentElement());
-    xp.setNamespaceContext(fromDom);
+//    NamespaceContext fromDom = new DOMNamespaceContext(doc.getDocumentElement());
+//    xp.setNamespaceContext(fromDom);
     XPathNodes xpnodes = xp.evaluateExpression("/rt:root/rt:child[@no]", doc, XPathNodes.class);
     for ( Node xpnode : xpnodes ) {
       result.add(getNodeString(xpnode));
