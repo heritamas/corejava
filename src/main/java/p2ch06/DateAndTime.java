@@ -8,6 +8,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
@@ -29,12 +30,15 @@ public class DateAndTime {
         LocalDate today = LocalDate.now();
 
         // how old are you?
+        LocalDate birthDay = LocalDate.of(1995, 11, 24);
+        System.out.println("I am " + birthDay.until(today, ChronoUnit.YEARS) + " years old.");
 
 
         // in days?
-
+        System.out.println("I am " + birthDay.until(today, ChronoUnit.DAYS) + " days old.");
 
         // on which day were you born?
+        System.out.println("I was born on " + birthDay.getDayOfWeek());
 
 
         // WTF is this ????
@@ -56,14 +60,19 @@ public class DateAndTime {
                 df.format(greg_date15));
 
         // next of same day?
+        System.out.println("Next Tuesday: " + today.with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY)));
 
 
         LocalTime rightNow = LocalTime.now();
 
         // what time is it in US EAST time
+        ZonedDateTime rightRightNow = ZonedDateTime.now(ZoneId.of("America/New_York"));
+        System.out.println("US EAST time right now: " + rightRightNow);
 
 
         // print date time in german
-
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL);
+        String format = dateTimeFormatter.localizedBy(Locale.GERMANY).format(rightRightNow);
+        System.out.println("Date and time in German: " + format);
     }
 }
