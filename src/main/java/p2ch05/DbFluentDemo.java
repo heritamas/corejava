@@ -96,6 +96,10 @@ public class DbFluentDemo {
         Query query = fluentJdbc.query();
 
         fetchTables(query);
+        for(Pet pet : pets) {
+            for (Food food: pet.getEats())
+            System.out.printf("%s szereti %s-t%n", pet.getPetName(), food.getFoodName());
+        }
         System.out.println("Success.");
 
     }
