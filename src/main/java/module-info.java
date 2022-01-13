@@ -6,4 +6,5 @@ module corejava {
         requires mockito.all;
         requires org.jsoup;
     requires java.sql;
+    requires java.scripting;
 }
