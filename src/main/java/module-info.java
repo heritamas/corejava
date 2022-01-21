@@ -5,6 +5,9 @@ module corejava {
         requires org.antlr.antlr4.runtime;
         requires mockito.all;
         requires org.jsoup;
+        requires org.apache.bcel;
+
     requires java.sql;
     requires java.scripting;
+    requires java.compiler;
 }
