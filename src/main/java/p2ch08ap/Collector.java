@@ -10,6 +10,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.ElementScanner9;
@@ -31,8 +32,14 @@ public class Collector extends AbstractProcessor {
 
         @Override
         public Boolean visitExecutable(ExecutableElement e, List<String> nfo) {
-            String vars = null;
-
+            if (e.getKind() == ElementKind.METHOD) {
+                Name simpleName = e.getSimpleName();
+                List<? extends VariableElement> parameters = e.getParameters();
+                String params = parameters.stream()
+                        .map(variableElement -> String.format("%s: %s", variableElement.getSimpleName(), variableElement.asType()))
+                        .collect(Collectors.joining(", "));
+                nfo.add(String.format("Method: %s, method parameters: %s", simpleName, params));
+            }
             return true;
         }
     }
@@ -53,7 +60,12 @@ public class Collector extends AbstractProcessor {
     boolean processElement(Element elt) {
 
         try {
-            String packageName = elt.getEnclosingElement().toString();
+            String packageName = "";
+            Element possiblePackage = elt.getEnclosingElement();
+            if (possiblePackage.getKind() == ElementKind.PACKAGE) {
+                packageName = possiblePackage.toString();
+            }
+            System.out.println("Package name: " + packageName);
             String className = elt.getSimpleName().toString();
             String fileName = String.format("%s-report", className);
             FileObject resource = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, packageName, fileName);
@@ -62,14 +74,14 @@ public class Collector extends AbstractProcessor {
             List<String> info = new ArrayList<>();
             DebugMethodVisitor dmv = new DebugMethodVisitor();
             dmv.scan(elt, info);
-
-            } catch (IOException e) {
-                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+            
+            try (PrintWriter printWriter = new PrintWriter(resource.openWriter())) {
+                info.forEach(printWriter::println);
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage());
+            }
 
         return true;
     }
