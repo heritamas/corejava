@@ -1,4 +1,4 @@
-grant codebase "file:login.jar"
+grant codebase "file:${user.home}${/}-"
 {    
    permission javax.security.auth.AuthPermission "createLoginContext.Login1";
    permission javax.security.auth.AuthPermission "doAsPrivileged";
@@ -6,7 +6,7 @@ grant codebase "file:login.jar"
    permission java.io.FilePermission "jaas/password.txt", "read";
 };
 
-grant principal jaas.SimplePrincipal "role=admin"
+grant principal jaas.SimplePrincipal "human=yes"
 {
    permission java.util.PropertyPermission "*", "read";
 };

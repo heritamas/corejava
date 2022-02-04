@@ -12,4 +12,5 @@ module corejava {
 
     requires extmod;
     uses extmod.intf.DateService;
+    exports p2ch10;
 }

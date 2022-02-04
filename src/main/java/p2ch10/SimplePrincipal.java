@@ -22,6 +22,14 @@ public class SimplePrincipal implements Principal
       this.value = value;
    }
 
+   @Override
+   public String toString() {
+      return "SimplePrincipal{" +
+          "descr='" + descr + '\'' +
+          ", value='" + value + '\'' +
+          '}';
+   }
+
    /**
     * Returns the role name of this principal.
     * @return the role name
